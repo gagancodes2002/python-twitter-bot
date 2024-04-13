@@ -1,0 +1,15 @@
+twitter.com	FALSE	/	FALSE	1719886743	g_state	{"i_l":0}
+.twitter.com	TRUE	/	TRUE	1738549208	kdt	SYx593cf8nloj3DPAEtB181DSy9yzt8QryYVwKGz
+.twitter.com	TRUE	/	TRUE	1717336906	d_prefs	MToxLGNvbnNlbnRfdmVyc2lvbjoyLHRleHRfdmVyc2lvbjoxMDAw
+.twitter.com	TRUE	/	TRUE	1735999307	guest_id_ads	v1%3A170067008097570810
+.twitter.com	TRUE	/	TRUE	1735999307	guest_id_marketing	v1%3A170067008097570810
+.twitter.com	TRUE	/	TRUE	1738549208	dnt	1
+.twitter.com	TRUE	/	TRUE	1738549208	auth_token	f072f0ccb2056e3b754f575fd55715b21d2ed4e9
+.twitter.com	TRUE	/	TRUE	1738549208	personalization_id	"v1_Wficvj0SYBej8zmlHNGpPA=="
+.twitter.com	TRUE	/	TRUE	1738549208	guest_id	v1%3A170433480273465457
+.twitter.com	TRUE	/	TRUE	1738549208	ct0	a3c06fabe7cb77c773f540b660ef034d74a8da0c69f61e71cf35afb1e362617376c7db60d130af411cfdae9e34ca02cc89b33bc93196f650edd9b99765f124e156941af5fbf18c82bfdb9cad0f202db5
+api.twitter.com	FALSE	/	FALSE	0	lang	en
+.twitter.com	TRUE	/	FALSE	1739199841	twtr_pixel_opt_in	Y
+.twitter.com	TRUE	/	FALSE	1744126967	_ga	GA1.2.1672627391.1701784909
+.twitter.com	TRUE	/	TRUE	1743781367	auth_multi	"1647660227502776321:6ec5b5bb536574cba9793be6d1e6eb6da7b5052d"
+.twitter.com	TRUE	/	TRUE	1741102971	twid	u%3D1687147066189914117

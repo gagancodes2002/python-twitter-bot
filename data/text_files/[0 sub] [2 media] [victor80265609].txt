@@ -1,0 +1,16 @@
+.twitter.com	TRUE	/	TRUE	1743260811	guest_id	v1%3A170870080983840532
+twitter.com	FALSE	/	TRUE	0	SLG_GWPT_Show_Hide_tmp	1
+.twitter.com	TRUE	/	TRUE	0	_twitter_sess	BAh7CSIKZmxhc2hJQzonQWN0aW9uQ29udHJvbGxlcjo6Rmxhc2g6OkZsYXNo%250ASGFzaHsABjoKQHVzZWR7ADoPY3JlYXRlZF9hdGwrCJ5Ex1yOAToMY3NyZl9p%250AZCIlYjU3MDU0Zjc4OGNiMjg3NTQxMTBmYjVhNjQyODljZmE6B2lkIiVlOWNm%250AOTIwNTA0NGNlZjA5OGU1Zjg5YTY0MmJmNTUxMg%253D%253D--776f6aeebf3d11b04bb764febd51aac577e65087
+.twitter.com	TRUE	/	TRUE	1711558348	external_referer	padhuUp37zjgzgv1mFWxJ12Ozwit7owX|0|8e8t2xd8A2w%3D
+.twitter.com	TRUE	/	TRUE	1745513563	auth_token	92e50da1a48cfbafe7d149c7049e3d59bbb17733
+.twitter.com	TRUE	/	TRUE	1745513563	ct0	d2c5eabf5611810989bece4f2d27328d93eb0ab9aa9bd58ceb89deb85c6d167782f3f5d93ef25dda1e7da11eb040c7b3c08b673ec1a5821abf2a0dee8c5cfc1e50a24d3259f997bda10c1dcc927b2039
+twitter.com	FALSE	/	FALSE	1726505561	g_state	{"i_l":0}
+.twitter.com	TRUE	/	TRUE	1745513563	kdt	cOcZcRlGYcc0Vw8GZvJwX4vzUVN6krXJAHd4MZCu
+.twitter.com	TRUE	/	TRUE	1745513703	guest_id_ads	v1%3A170870080983840532
+.twitter.com	TRUE	/	TRUE	1745513703	guest_id_marketing	v1%3A170870080983840532
+twitter.com	FALSE	/	FALSE	0	lang	en
+.twitter.com	TRUE	/	TRUE	1745513703	personalization_id	"v1_38BwAbLyJK/uhMGyaxJ+OQ=="
+twitter.com	FALSE	/	TRUE	0	SLG_wptGlobTipTmp	1
+.twitter.com	TRUE	/	FALSE	1745513705	_ga	GA1.2.2071068001.1710953554
+.twitter.com	TRUE	/	TRUE	1742489708	twid	u%3D1056163347094220800
+twitter.com	FALSE	/	TRUE	0	SLG_G_WPT_TO	pt

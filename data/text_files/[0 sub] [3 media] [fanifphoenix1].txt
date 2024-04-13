@@ -1,0 +1,12 @@
+.twitter.com	FALSE	/	TRUE	1743236456	guest_id	v1%3A170902205674522491
+.twitter.com	FALSE	/	TRUE	1743236501	ads_prefs	"HBISAAA="
+.twitter.com	TRUE	/	TRUE	1743236501	auth_token	538e4ea1bbc5e0e711bb4a19123a131bb0a9f657
+.twitter.com	FALSE	/	TRUE	1743236502	ct0	336f41d69bace00bb7e3661d8ab8ec2de12aa00e8def0ed3edcc9efc3796c7b50e70793918bc95d21b827535beab61d5b3ed9d550e32948dfd3e97b6dfce6f460eb73706bf6f2aec517060cf9e696000
+.twitter.com	TRUE	/	TRUE	1743236501	kdt	rvjii6zSjmzLH1m7GskueZDZyu9aZq4DvziyWFrY
+.twitter.com	FALSE	/	TRUE	1743236510	dnt	1
+.twitter.com	FALSE	/	TRUE	1724574117	d_prefs	MToxLGNvbnNlbnRfdmVyc2lvbjoyLHRleHRfdmVyc2lvbjoxMDAw
+.twitter.com	FALSE	/	TRUE	1743236518	guest_id_ads	v1%3A170902205674522491
+.twitter.com	FALSE	/	TRUE	1743236518	guest_id_marketing	v1%3A170902205674522491
+.twitter.com	FALSE	/	TRUE	1743236518	personalization_id	"v1_YgD6PoBjSeiXnvi0W4L+tQ=="
+.twitter.com	FALSE	/	FALSE	1743946104	_ga	GA1.2.133705781.1709022121
+.twitter.com	FALSE	/	TRUE	1741699538	twid	u%3D1409544900463452164

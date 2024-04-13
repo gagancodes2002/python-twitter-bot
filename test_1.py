@@ -1,0 +1,122 @@
+from random import randint, shuffle
+from sqlite3 import connect
+import time
+from actions import bot
+import schedule
+
+# Connect to the database
+connection = connect('db.sqlite3')
+cursor = connection.cursor()
+
+# List all tables
+# cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
+# tables = cursor.fetchall()
+# print("Tables in the database:")
+# for table in tables:
+#     print(table[0])
+
+# Step 1: Ask user for selection of batch
+print("\nSelect Batch")
+cursor.execute("SELECT * FROM todo_account")
+batches = cursor.fetchall()
+
+for index, batch in enumerate(batches):
+    print(f"{index+1}. {batch[3]}")
+batch_selection = int(input("Enter Batch Number: "))
+selected_batch = batches[batch_selection-1]
+print(selected_batch)
+
+# Step 2: Ask user for selection of client
+print("\nSelect Client")
+cursor.execute(f"SELECT * FROM todo_client")
+clients = cursor.fetchall()
+
+for index, client in enumerate(clients):
+    print(f"{index+1}. {client[1]}")
+client_selection = int(input("Enter Client Number: "))
+selected_client = clients[client_selection-1]
+print(selected_client)
+
+# Step 3: Ask user for selection of action
+print("\nSelect Action")
+actions = ["Tweet", "Comment", "Mixed"]
+for index, action in enumerate(actions):
+    print(f"{index+1}. {action}")
+action_selection = int(input("Enter Action Number: "))
+selected_action = actions[action_selection-1]
+print(selected_action)
+
+# Step 3.1: Ask user if images are to be used
+use_images = input("Use Images? (y/n): ")
+print(use_images)
+
+# Step 3.2 : List all images of selected client if use_images is True
+# if use_images == "y":
+    
+
+
+# Step 4: Ask user number of tweets/comments to make
+number_of_actions = int(input("Enter Number of Actions: "))
+print(number_of_actions)
+
+# Commit the changes to the database
+cursor.connection.commit()
+
+def schedule_action(selected_batch, selected_client, selected_action, cursor, start, end,client_content_list, filtered_accounts_list, number_of_actions, use_images):
+    interval_minutes = randint(start, end)
+    print("Interval: ", interval_minutes)
+    bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3',  number_of_actions, use_images, selected_action)
+    schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images)
+
+def run_action(selected_batch, selected_client, selected_action, cursor):
+    filtered_accounts = selected_batch[2]
+    filtered_accounts_list = []
+    for account in filtered_accounts.split("\n"):
+        parts = account.split(":")
+        username = parts[0]
+        email = parts[1]
+        password = parts[2]
+        token = parts[3]
+        auth_token = parts[4]
+        filtered_accounts_list.append({
+            "email": email.strip(),
+            "password": password.strip(),
+            "username": username.strip(),
+            "token": token.strip(),
+            "auth_token": auth_token.strip()
+        })
+        
+    client_content = selected_client[5]
+    client_content_list = []
+    for content in client_content.split("\n"):
+        client_content_list.append(content)
+
+    # Shuffle the filtered_accounts_list and client_content_list
+    shuffle(filtered_accounts_list)
+    shuffle(client_content_list)
+    
+    # Ask user if he wants to run action immediately or schedule it
+    print("Select type of execution")
+    print("1. Immediate")
+    print("2. Schedule")
+    execution_type = int(input("Enter Execution Type: "))
+    if execution_type == 1:
+        bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3',  number_of_actions, use_images, selected_action)
+    else:
+        print("Scheduling the action")
+        start = int(input("Enter the start of the range for running the action (in minutes): "))
+        end = int(input("Enter the end of the range for running the action (in minutes): "))
+    
+        # Schedule the action with a random interval within the range
+        interval_minutes = randint(start, end)
+        print("Interval: ", interval_minutes)
+        schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images)
+    
+        # Infinite loop to keep the script running
+        while True:
+            schedule.run_pending()
+            time.sleep(1)
+        
+
+# Execute the action
+run_action(selected_batch, selected_client, selected_action, cursor)
