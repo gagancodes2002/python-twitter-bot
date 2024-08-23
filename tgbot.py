@@ -7,7 +7,7 @@ TOKEN = '6527071707:AAEfnEn6IvArtSSSazkeSGd64-NKDMhoXlY'
 # Path to the text file
 import os
 
-file_path = os.path.join(os.path.dirname(__file__), 'assets/client_1/tweetLinks.txt')
+file_path = os.path.join(os.path.dirname(__file__), 'data/client_data/client_1/tweetLinks.txt')
 
 def read_lines():
     with open(file_path, 'r', encoding='utf-8') as f:
@@ -32,7 +32,7 @@ async def start(update: Update, context: CallbackContext):
 
     if chat_id not in chat_intervals:
         await update.message.reply_text("Starting to send lines...")
-        job = context.job_queue.run_repeating(send_line, interval=180, first=0, data={'chat_id': chat_id, 'current_index': 0})
+        job = context.job_queue.run_repeating(send_line, interval=10, first=0, data={'chat_id': chat_id, 'current_index': 0})
         chat_intervals[chat_id] = job
     else:
         await update.message.reply_text("Already sending lines. Use /stop to stop.")
