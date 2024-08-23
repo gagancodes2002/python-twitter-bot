@@ -26,7 +26,7 @@ import os
 def get_accounts():
     # get all the text files in the top directory
     # Directory C:\Users\gagan\Downloads\Twitter Sample Sessions\Twitter Sample Sessions
-    path = 'C:\Users\gagan\Downloads\Twitter Sample Sessions\Twitter Sample Sessions'
+    path = r'C:\Users\gagan\OneDrive\Documents\Personal\python-twitter-bot\data\text_files'
     # fix the path to be used in the os.listdir
     os.chdir(path)
     
@@ -34,8 +34,23 @@ def get_accounts():
     with open('all_accounts.txt', 'w') as f:
         for file in files:
             with open(file, 'r') as file:
+                auth_token = ""
+                ct0 = ""
                 for line in file:
                     print(line)
+                    parts = line.split("\t")
+                    cookie_name = parts[5]
+                    cookie_value = parts[6]
+                    print(f"{cookie_name}:{cookie_value}")
+                    
+                    if cookie_name == "auth_token":
+                        auth_token = cookie_value.strip()
+                    if cookie_name == "ct0":
+                        ct0 = cookie_value.strip()
+                    if auth_token and ct0:
+                        f.write(f"null:null:null:{ct0}:{auth_token}\n")
+                        auth_token = ""
+                        ct0 = ""
                     # parts = line.split("\t")
                     # username = "null"
                     # password = "null"

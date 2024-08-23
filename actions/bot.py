@@ -51,7 +51,7 @@ def get_reply_ids_from_users(client_name, db_path, accounts_list):
         print("Commentable IDs: ", commentable_ids)
         return commentable_ids
     except Exception as e:
-        print("Exception: ", e)
+        print("Exception S: ", e)
         
 
 def get_replies_ids(reply_type, client_name, db_path, accounts_list):
@@ -69,7 +69,7 @@ def get_replies_ids(reply_type, client_name, db_path, accounts_list):
         elif reply_type == "2":
             return get_reply_ids_from_users(client_name, db_path, accounts_list)
     except Exception as e:
-        print("Exception: ", e)
+        print("Exception T: ", e)
 
 # print(get_replies_ids("1", "Spectra", "db.sqlite3", account_list))
 
@@ -104,7 +104,8 @@ def tweet(obj, message, client_name, db_path, use_images, replie_ids):
            images = cursor.fetchall()
            random_image = images[random.randint(0, len(images)-1)]
            media_ids.append(client.upload_media(random_image[2]))
-
+        # add a random 5 alphanumeric string to the message
+        message = message + " " + ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=5))
         tweet_id = client.create_tweet(message, media_ids=media_ids, reply_to=reply_to_id)
         if tweet_id.id:
             tweet_link = "https://twitter.com/{username}/status/{tweet_id.id}".format(username=obj['username'], tweet_id=tweet_id)
@@ -122,7 +123,7 @@ def tweet(obj, message, client_name, db_path, use_images, replie_ids):
             return False  # Tweet failed
 
     except Exception as e:
-        print('Exception : {dikkat}'.format(dikkat=e))                                               
+        print('Exception B : {dikkat}'.format(dikkat=e))                                               
         return False  # Tweet failed
 
 def tweet_wrapper(args):

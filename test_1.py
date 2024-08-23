@@ -48,6 +48,7 @@ print(selected_action)
 
 # Step 3.1: Ask user if images are to be used
 use_images = input("Use Images? (y/n): ")
+use_images = use_images == 'y'
 print(use_images)
 
 # Step 3.2 : List all images of selected client if use_images is True

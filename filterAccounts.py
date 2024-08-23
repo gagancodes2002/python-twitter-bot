@@ -10,6 +10,8 @@ accounts = accounts.readlines()
 accountsList = []
 accounts = [account.strip() for account in accounts]
 for account in accounts:
+    if len(account.split(":")) != 5:
+        continue
     parts = account.split(":")
     email = parts[0]
     password = parts[1]
@@ -40,7 +42,7 @@ def check_account(obj):
         # the result will be a dictionary with the user information <User id="1065422520868843520"> return true if the user is valid
         return info.id is not None
     except Exception as e:
-        print('Exception : {dikkat}'.format(dikkat=e))
+        print('Exception F: {dikkat}'.format(dikkat=e))
         return False
 
 # status =  check_account(accountsList[57])
