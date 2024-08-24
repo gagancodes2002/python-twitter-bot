@@ -1,19 +1,12 @@
-from random import randint, shuffle
+from random import randint, shuffle, uniform
 from sqlite3 import connect
 import time
-from actions import bot
 import schedule
+from actions import bot
 
 # Connect to the database
 connection = connect('db.sqlite3')
 cursor = connection.cursor()
-
-# List all tables
-# cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
-# tables = cursor.fetchall()
-# print("Tables in the database:")
-# for table in tables:
-#     print(table[0])
 
 # Step 1: Ask user for selection of batch
 print("\nSelect Batch")
@@ -48,13 +41,8 @@ print(selected_action)
 
 # Step 3.1: Ask user if images are to be used
 use_images = input("Use Images? (y/n): ")
-use_images = use_images == 'y'
+use_images = use_images.lower() == 'y'
 print(use_images)
-
-# Step 3.2 : List all images of selected client if use_images is True
-# if use_images == "y":
-    
-
 
 # Step 4: Ask user number of tweets/comments to make
 number_of_actions = int(input("Enter Number of Actions: "))
@@ -63,10 +51,22 @@ print(number_of_actions)
 # Commit the changes to the database
 cursor.connection.commit()
 
-def schedule_action(selected_batch, selected_client, selected_action, cursor, start, end,client_content_list, filtered_accounts_list, number_of_actions, use_images):
+def schedule_action(selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images):
+    # Randomize the interval slightly
     interval_minutes = randint(start, end)
     print("Interval: ", interval_minutes)
-    bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3',  number_of_actions, use_images, selected_action)
+
+    # Add a random delay before performing the action
+    delay_seconds = uniform(2, 7)  # Random delay between 2 to 7 seconds
+    time.sleep(delay_seconds)
+
+    # Randomly determine the number of actions for this round to avoid detection
+    actions_this_round = randint(1, number_of_actions)
+
+    # Perform the action
+    bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3', actions_this_round, use_images, selected_action)
+    
+    # Reschedule the action with a random interval
     schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images)
 
 def run_action(selected_batch, selected_client, selected_action, cursor):
@@ -96,7 +96,7 @@ def run_action(selected_batch, selected_client, selected_action, cursor):
     shuffle(filtered_accounts_list)
     shuffle(client_content_list)
     
-    # Ask user if he wants to run action immediately or schedule it
+    # Ask user if they want to run action immediately or schedule it
     print("Select type of execution")
     print("1. Immediate")
     print("2. Schedule")
@@ -117,7 +117,6 @@ def run_action(selected_batch, selected_client, selected_action, cursor):
         while True:
             schedule.run_pending()
             time.sleep(1)
-        
 
 # Execute the action
 run_action(selected_batch, selected_client, selected_action, cursor)

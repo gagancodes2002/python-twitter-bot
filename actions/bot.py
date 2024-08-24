@@ -98,6 +98,7 @@ def tweet(obj, message, client_name, db_path, use_images, replie_ids):
              'ct0': obj['token']
             }
         )
+        usernameFromClient = client.user().screen_name
         # get the image from the database
         if use_images:
            cursor.execute(f"SELECT * FROM todo_image WHERE client_link_id = {1}")
@@ -108,7 +109,7 @@ def tweet(obj, message, client_name, db_path, use_images, replie_ids):
         message = message + " " + ''.join(random.choices('abcdefghijklmnopqrstuvwxyz0123456789', k=5))
         tweet_id = client.create_tweet(message, media_ids=media_ids, reply_to=reply_to_id)
         if tweet_id.id:
-            tweet_link = "https://twitter.com/{username}/status/{tweet_id.id}".format(username=obj['username'], tweet_id=tweet_id)
+            tweet_link = "https://twitter.com/{username}/status/{tweet_id.id}".format(username=usernameFromClient, tweet_id=tweet_id)
             cursor.execute("SELECT tweet_links FROM todo_client WHERE name = ?", (client_name,))
             tweet_links = cursor.fetchone()
             tweet_links = tweet_links[0] if tweet_links else ''
