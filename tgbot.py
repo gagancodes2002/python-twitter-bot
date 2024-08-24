@@ -13,7 +13,6 @@ def read_lines():
     cursor.execute("SELECT tweet_links FROM todo_client WHERE name = ?", ("Venko",))
     tweet_links = cursor.fetchall()
     tweet_links = tweet_links[0][0].split("\n")
-    print("Tweet Links : ", tweet_links)
     tweet_links = [tweet_link.strip() for tweet_link in tweet_links]
     return tweet_links
 
@@ -68,7 +67,7 @@ async def start(update: Update, context: CallbackContext):
 
     if chat_id not in chat_intervals:
         await context.bot.send_message(chat_id=chat_id, text="Starting to send lines...")
-        job = context.job_queue.run_repeating(send_line, interval=10, first=0, data={'chat_id': chat_id, 'current_index': 0})
+        job = context.job_queue.run_repeating(send_line, interval=180, first=0, data={'chat_id': chat_id, 'current_index': 0})
         chat_intervals[chat_id] = job
     else:
         await context.bot.send_message(chat_id=chat_id, text="Already sending lines. Use /stop to stop.")

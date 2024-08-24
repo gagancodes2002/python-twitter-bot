@@ -52,17 +52,7 @@ def get_reply_ids_from_users(client_name, db_path, accounts_list):
         print("Commentable IDs: ", commentable_ids)
         return commentable_ids
     except Exception as e:
-        print("Exception S: ", e)
-        
-def saveInTweetLinksFile(tweet_link): 
-    # Construct the file path using os.path.join
-    # Path to the text file
-    # backend\src\assets\client_1\tweetLinks.txt
-    file_path = os.path.join(os.path.dirname(__file__), 'data\client_data/client_1/tweetLinks.txt')
-    # Write to the file
-    with open(file_path, 'a', encoding='utf-8') as f:
-        f.write(tweet_link + '\n')
-        
+        print("Exception S: ", e)       
     
 
 def get_replies_ids(reply_type, client_name, db_path, accounts_list):
@@ -127,7 +117,6 @@ def tweet(obj, message, client_name, db_path, use_images, replie_ids):
             tweet_links = tweet_links + "\n" + tweet_link
             cursor.execute("UPDATE todo_client SET tweet_links = ? WHERE name = ?", (tweet_links, client_name))
             connection.commit()
-            saveInTweetLinksFile(tweet_link)
             
             
             # Close the cursor and connection
