@@ -66,11 +66,11 @@ async def start(update: Update, context: CallbackContext):
     chat_id = update.message.chat_id
 
     if chat_id not in chat_intervals:
-        await context.bot.send_message(chat_id=chat_id, text="Starting to send lines...")
+        await context.bot.send_message(chat_id=chat_id, text="Retrieving tweets ...")
         job = context.job_queue.run_repeating(send_line, interval=180, first=0, data={'chat_id': chat_id, 'current_index': 0})
         chat_intervals[chat_id] = job
     else:
-        await context.bot.send_message(chat_id=chat_id, text="Already sending lines. Use /stop to stop.")
+        await context.bot.send_message(chat_id=chat_id, text="Already sending tweets. Use /stop to stop.")
 
 # Command handler to stop sending messages
 async def stop(update: Update, context: CallbackContext):
@@ -79,9 +79,9 @@ async def stop(update: Update, context: CallbackContext):
     if chat_id in chat_intervals:
         job = chat_intervals.pop(chat_id)
         job.schedule_removal()
-        await context.bot.send_message(chat_id=chat_id, text="Stopped sending lines.")
+        await context.bot.send_message(chat_id=chat_id, text="Stopped retrieving tweets")
     else:
-        await context.bot.send_message(chat_id=chat_id, text="No active line sending session.")
+        await context.bot.send_message(chat_id=chat_id, text="No active tweets sending session.")
 
 def main():
     # Create the Application

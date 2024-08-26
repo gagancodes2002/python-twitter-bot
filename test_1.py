@@ -44,6 +44,10 @@ use_images = input("Use Images? (y/n): ")
 use_images = use_images.lower() == 'y'
 print(use_images)
 
+# Step 3.2: Ask user if ye wants all images or percent variation
+if (use_images == "y"):
+    
+
 # Step 4: Ask user number of tweets/comments to make
 number_of_actions = int(input("Enter Number of Actions: "))
 print(number_of_actions)
