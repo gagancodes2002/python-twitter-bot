@@ -137,17 +137,17 @@ def tweet_wrapper(args):
         
 
 
-def tweets(tweet_list, accounts_list, client, db_path, iteration, use_images, action):
-    
+def tweets(tweet_list, accounts_list, client, db_path, iteration, image_percentage, action):
     reply_ids = []
     
     if action == "Comment" or action == "Mixed":
         # 1 for comments, 2 for users
         reply_type = input("Reply to \n1. Comments\n2. Users\nEnter Reply Type: ")
-        reply_ids = get_replies_ids(reply_type, client,db_path, accounts_list)
+        reply_ids = get_replies_ids(reply_type, client, db_path, accounts_list)
         print("Reply IDs: ", reply_ids)
     
     print("Reply IDs After: ", reply_ids)
+    
     # Initialize variables to track success and error counts
     success_count = 0
     error_count = 0
@@ -155,15 +155,36 @@ def tweets(tweet_list, accounts_list, client, db_path, iteration, use_images, ac
     # Initialize the progress bar
     progress_bar = tqdm(total=iteration, desc="Tweeting", unit=" tweet", colour="green")
     
+    def should_use_image():
+        """Decides if an image should be included based on the percentage."""
+        image_val = random.randint(1, 100) <= image_percentage 
+        print("Image Val: ", image_val)
+        return image_val
+    
     with ThreadPoolExecutor(max_workers=5) as executor:  # Adjust max_workers as needed
         # Prepare arguments for the tweet function
-        # args = [(random.choice(accounts_list), random.choice(tweet_list), client, db_path, use_images, reply_ids if  random_action else []) for _ in range(iteration)]
-        
-        # if action == "Mixed" then we should randomly sometimes give reply_ids and sometimes empty list
         if action == "Mixed":
-            args = [(random.choice(accounts_list), random.choice(tweet_list), client, db_path, use_images, reply_ids if random.choice([True, False]) else []) for _ in range(iteration)]
+            args = [
+                (
+                    random.choice(accounts_list), 
+                    random.choice(tweet_list), 
+                    client, 
+                    db_path, 
+                    should_use_image(),  # Dynamically decide whether to include an image
+                    reply_ids if random.choice([True, False]) else []
+                ) for _ in range(iteration)
+            ]
         else:
-            args = [(random.choice(accounts_list), random.choice(tweet_list), client, db_path, use_images, reply_ids) for _ in range(iteration)]
+            args = [
+                (
+                    random.choice(accounts_list), 
+                    random.choice(tweet_list), 
+                    client, 
+                    db_path, 
+                    should_use_image(),  # Dynamically decide whether to include an image
+                    reply_ids
+                ) for _ in range(iteration)
+            ]
         
         # Map the tweet function to the arguments using ThreadPoolExecutor
         for result in executor.map(tweet_wrapper, args):

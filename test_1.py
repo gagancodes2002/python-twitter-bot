@@ -39,14 +39,15 @@ action_selection = int(input("Enter Action Number: "))
 selected_action = actions[action_selection-1]
 print(selected_action)
 
-# Step 3.1: Ask user if images are to be used
-use_images = input("Use Images? (y/n): ")
-use_images = use_images.lower() == 'y'
-print(use_images)
-
-# Step 3.2: Ask user if ye wants all images or percent variation
-if (use_images == "y"):
-    
+# Step 3.1: Ask user if images are to be used and percentage
+use_images = input("Use Images? (y/n): ").lower() == 'y'
+if use_images:
+    image_percentage = int(input("Enter the percentage of actions to include images (0-100): "))
+    if not (0 <= image_percentage <= 100):
+        raise ValueError("Percentage must be between 0 and 100.")
+else:
+    image_percentage = 0
+print(use_images, image_percentage)
 
 # Step 4: Ask user number of tweets/comments to make
 number_of_actions = int(input("Enter Number of Actions: "))
@@ -55,7 +56,7 @@ print(number_of_actions)
 # Commit the changes to the database
 cursor.connection.commit()
 
-def schedule_action(selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images):
+def schedule_action(selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, image_percentage):
     # Randomize the interval slightly
     interval_minutes = randint(start, end)
     print("Interval: ", interval_minutes)
@@ -68,10 +69,10 @@ def schedule_action(selected_batch, selected_client, selected_action, cursor, st
     actions_this_round = randint(1, number_of_actions)
 
     # Perform the action
-    bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3', actions_this_round, use_images, selected_action)
+    bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3', actions_this_round, image_percentage, selected_action)
     
     # Reschedule the action with a random interval
-    schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images)
+    schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, image_percentage)
 
 def run_action(selected_batch, selected_client, selected_action, cursor):
     filtered_accounts = selected_batch[2]
@@ -106,7 +107,7 @@ def run_action(selected_batch, selected_client, selected_action, cursor):
     print("2. Schedule")
     execution_type = int(input("Enter Execution Type: "))
     if execution_type == 1:
-        bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3',  number_of_actions, use_images, selected_action)
+        bot.tweets(client_content_list, filtered_accounts_list, selected_client[1], 'db.sqlite3', number_of_actions, image_percentage, selected_action)
     else:
         print("Scheduling the action")
         start = int(input("Enter the start of the range for running the action (in minutes): "))
@@ -115,7 +116,7 @@ def run_action(selected_batch, selected_client, selected_action, cursor):
         # Schedule the action with a random interval within the range
         interval_minutes = randint(start, end)
         print("Interval: ", interval_minutes)
-        schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, use_images)
+        schedule.every(interval_minutes).minutes.do(schedule_action, selected_batch, selected_client, selected_action, cursor, start, end, client_content_list, filtered_accounts_list, number_of_actions, image_percentage)
     
         # Infinite loop to keep the script running
         while True:
